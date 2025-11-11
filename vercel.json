@@ -2,30 +2,19 @@
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/build/client",
   "installCommand": "cd frontend && npm install",
-  "devCommand": "cd frontend && npm run dev",
   "framework": "vite",
   "functions": {
-    "python/valuecell/server/main.py": {
-      "runtime": "python3.12"
+    "api/index.py": {
+      "runtime": "@vercel/python@4.3.0"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/python/valuecell/server/main.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/client/$1"
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     }
   ],
   "env": {
-    "PYTHONPATH": "python",
-    "NODE_ENV": "production"
-  },
-  "build": {
-    "env": {
-      "PYTHONPATH": "python"
-    }
+    "PYTHONPATH": "python"
   }
 }
